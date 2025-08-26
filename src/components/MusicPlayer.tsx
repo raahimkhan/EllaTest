@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+	View,
+	Text,
+	TouchableOpacity,
+	Platform,
+	StyleSheet,
+} from 'react-native';
 import useInsetsInfo from '@hooks/use-insets-info';
 import {
 	wp,
@@ -81,7 +87,8 @@ const MusicPlayer: React.FC = React.memo(() => {
 							style={[
 								styles.timerText,
 								{
-									marginLeft: wp(6),
+									marginLeft:
+										Platform.OS === 'web' ? wp(3) : wp(6),
 								},
 							]}
 						>
@@ -92,7 +99,8 @@ const MusicPlayer: React.FC = React.memo(() => {
 							style={[
 								styles.timerText,
 								{
-									marginRight: wp(6),
+									marginRight:
+										Platform.OS === 'web' ? wp(3) : wp(6),
 								},
 							]}
 						>
@@ -107,7 +115,7 @@ const MusicPlayer: React.FC = React.memo(() => {
 					>
 						<AntDesign
 							name="banckward"
-							size={wp(7)}
+							size={Platform.OS === 'web' ? wp(2.5) : wp(7)}
 							color="#1B1B1B"
 						/>
 					</TouchableOpacity>
@@ -121,13 +129,13 @@ const MusicPlayer: React.FC = React.memo(() => {
 						{isPlaying ? (
 							<AntDesign
 								name="pause"
-								size={wp(10)}
+								size={Platform.OS === 'web' ? wp(4) : wp(10)}
 								color="#DBA604"
 							/>
 						) : (
 							<AntDesign
 								name="caretright"
-								size={wp(10)}
+								size={Platform.OS === 'web' ? wp(4) : wp(10)}
 								color="#DBA604"
 							/>
 						)}
@@ -138,7 +146,7 @@ const MusicPlayer: React.FC = React.memo(() => {
 					>
 						<AntDesign
 							name="forward"
-							size={wp(7)}
+							size={Platform.OS === 'web' ? wp(2.5) : wp(7)}
 							color="#1B1B1B"
 						/>
 					</TouchableOpacity>
@@ -193,7 +201,7 @@ const styles = StyleSheet.create({
 	},
 	timerText: {
 		fontFamily: 'OutfitMedium',
-		fontSize: wp(4),
+		fontSize: Platform.OS === 'web' ? wp(1.5) : wp(4),
 		color: hexToRgba('#000000', 0.5),
 	},
 	controlsContainer: {
@@ -201,15 +209,15 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginBottom: hp(1),
+		marginBottom: Platform.OS === 'web' ? hp(0.5) : wp(1),
 	},
 	playPauseContainer: {
-		padding: wp(2),
+		padding: Platform.OS === 'web' ? hp(0.1) : wp(2),
 		borderRadius: 10,
 		backgroundColor: hexToRgba('#8794FF', 0.2),
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginHorizontal: wp(10),
+		marginHorizontal: Platform.OS === 'web' ? wp(5.5) : wp(10),
 	},
 	layerBlur: {
 		width: wp(100),

@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
 					},
 				],
 			},
+			// to show drop shadow on web
+			web: {
+				boxShadow: `0px 20px 20px ${hexToRgba('#C2C3CB', 0.5)}`,
+			},
 		}),
 	},
 	transcriptMetaData: {
