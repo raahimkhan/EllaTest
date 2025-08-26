@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
 	View,
 	Text,
@@ -14,8 +14,8 @@ import {
 } from '@raahimkhan23/react-native-responsive-utils';
 import hexToRgba from 'hex-to-rgba';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { LinearProgress } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Progress from 'react-native-progress';
 import { useGlobalStore } from '@global-store/global-store';
 import { togglePlayPause } from '@utils/toggle-play-pause';
 
@@ -34,7 +34,7 @@ const MusicPlayer: React.FC = React.memo(() => {
 	const isPlaying = useGlobalStore((state) => state.isPlaying);
 
 	// related to the progress bar
-	const progressRef = React.useRef(null);
+	const progressWrapperRef = useRef<View>(null);
 	const [progressYPosition, setProgressYPosition] = useState<number>(0);
 
 	/*
@@ -44,20 +44,11 @@ const MusicPlayer: React.FC = React.memo(() => {
 	*/
 	useEffect(() => {
 		requestAnimationFrame(() => {
-			if (progressRef.current) {
-				(progressRef.current as any)?.measure(
-					(
-						_x: number,
-						_y: number,
-						_width: number,
-						_height: number,
-						_pageX: number,
-						pageY: number
-					) => {
-						setProgressYPosition(pageY);
-					}
-				);
-			}
+			progressWrapperRef.current?.measure(
+				(_x, _y, _width, _height, _pageX, pageY) => {
+					setProgressYPosition(pageY);
+				}
+			);
 		});
 	}, []);
 
@@ -73,14 +64,21 @@ const MusicPlayer: React.FC = React.memo(() => {
 			>
 				<View style={styles.progressBarContainer}>
 					{/* progress bar */}
-					<LinearProgress
-						style={styles.progressBar}
-						value={Math.round(0.05 * 1000) / 1000}
-						variant="determinate"
-						color="#DBA604"
-						trackColor="rgba(135, 148, 255, 0.2)"
-						ref={progressRef}
-					/>
+					<View ref={progressWrapperRef}>
+						<Progress.Bar
+							style={styles.progressBar}
+							progress={0.8}
+							width={wp(100)}
+							height={progressBarHeight}
+							color="#DBA604"
+							unfilledColor="rgba(135, 148, 255, 0.2)"
+							borderWidth={0}
+							borderRadius={0}
+							useNativeDriver={
+								Platform.OS === 'web' ? false : true
+							}
+						/>
+					</View>
 					<View style={styles.timeContainer}>
 						{/* audio current time text, i.e., current position time */}
 						<Text
