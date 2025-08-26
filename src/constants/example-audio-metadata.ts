@@ -1,4 +1,6 @@
-export const exampleAudioMetadata = {
+import type { AudioMetaData } from '@blue-prints/audio-meta-data';
+
+export const exampleAudioMetadata: AudioMetaData = {
 	pause: 250,
 	speakers: [
 		{
