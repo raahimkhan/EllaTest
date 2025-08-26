@@ -1,0 +1,76 @@
+{
+  "expo": {
+    "name": "EllaTest",
+    "slug": "ellatest",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/images/icon.png",
+    "scheme": "ella-test",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.ella.test",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "aps-environment": "development"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.ella.test",
+      "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "pan"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./src/assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26,
+            "targetSdkVersion": 35,
+            "compileSdkVersion": 35
+          },
+          "ios": {
+            "deploymentTarget": "16.0"
+          }
+        }
+      ],
+      "expo-font",
+      "expo-audio"
+    ],
+    "runtimeVersion": "1.0.0",
+    "experiments": {
+      "typedRoutes": true
+    },
+    "updates": {
+      "checkAutomatically": "NEVER"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f23b83e5-e0a0-44d1-b9dc-2cea49a17ac8"
+      }
+    },
+    "owner": "raahimkhan_"
+  }
+}
