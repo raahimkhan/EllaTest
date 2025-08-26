@@ -1,12 +1,21 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import useLoadFonts from '@hooks/use-load-fonts';
 import { Stack } from 'expo-router';
+import {
+	setBaseScreenSize,
+	setFontScaleLimits,
+} from '@raahimkhan23/react-native-responsive-utils';
 
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
+	useEffect(() => {
+		setBaseScreenSize(393, 852);
+		setFontScaleLimits(2, 2);
+	}, []);
+
 	const fontsLoaded = useLoadFonts();
 
 	const onLayoutRootView = useCallback(async () => {

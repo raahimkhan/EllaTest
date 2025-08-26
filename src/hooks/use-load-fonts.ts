@@ -2,13 +2,10 @@ import { useFonts } from 'expo-font';
 
 const useLoadFonts = () => {
 	const [fontsLoaded] = useFonts({
-		PoppinsSemiBold: require('../assets/fonts/Poppins-SemiBold.ttf'),
-		InterExtraBold: require('../assets/fonts/Inter-ExtraBold.otf'),
-		InterMedium: require('../assets/fonts/Inter-Medium.otf'),
-		InterRegular: require('../assets/fonts/Inter-Regular.otf'),
-		RobotoMedium: require('../assets/fonts/Roboto-Medium.ttf'),
-		RobotoRegular: require('../assets/fonts/Roboto-Regular.ttf'),
-		InterSemiBold: require('../assets/fonts/Inter-SemiBold.otf'),
+		OutfitMedium: require('../assets/fonts/Outfit-Medium.ttf'),
+		OutfitRegular: require('../assets/fonts/Outfit-Regular.ttf'),
+		OutfitSemiBold: require('../assets/fonts/Outfit-SemiBold.ttf'),
+		SFProTextSemiBold: require('../assets/fonts/SF-Pro-Text-SemiBold.ttf'),
 	});
 	return fontsLoaded;
 };
