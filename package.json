@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Muhammad Raahim Khan <muhammadr915@gmail.com> (https://github.com/raahimkhan)",
   "scripts": {
+    "prepare": "lefthook install",
     "start": "expo start",
     "ios:bare": "expo run:ios",
     "android:bare": "expo run:android",
