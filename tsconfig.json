@@ -21,10 +21,12 @@
       "@app/*": ["./app/*"],
       "@assets/*": ["./src/assets/*"],
       "@blue-prints/*": ["./src/blue-prints/*"],
+      "@components/*": ["./src/components/*"],
       "@global-store/*": ["./src/global-store/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@screens/*": ["./src/screens/*"],
-      "@style/*": ["./src/style/*"]
+      "@style/*": ["./src/style/*"],
+      "@utils/*": ["./src/utils/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
