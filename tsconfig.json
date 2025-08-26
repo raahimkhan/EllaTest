@@ -25,7 +25,6 @@
       "@global-store/*": ["./src/global-store/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@screens/*": ["./src/screens/*"],
-      "@style/*": ["./src/style/*"],
       "@utils/*": ["./src/utils/*"]
     },
     "forceConsistentCasingInFileNames": true,

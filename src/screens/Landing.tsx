@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Platform } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
+import { View, Platform, StyleSheet } from 'react-native';
 import MusicPlayer from '@components/MusicPlayer';
+import hexToRgba from 'hex-to-rgba';
 
 const Landing: React.FC = React.memo(() => {
 	return (
@@ -16,7 +16,7 @@ const Landing: React.FC = React.memo(() => {
 	);
 });
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#F6F6F9',
@@ -29,7 +29,7 @@ const styles = StyleSheet.create((theme) => ({
 		...Platform.select({
 			// drop shadow properties for iOS
 			ios: {
-				shadowColor: theme.utilities.convertHexToRGBA('#C2C3CB', 0.5),
+				shadowColor: hexToRgba('#C2C3CB', 0.5),
 				shadowOffset: { width: 0, height: 20 },
 				shadowOpacity: 1,
 				shadowRadius: 20,
@@ -43,10 +43,7 @@ const styles = StyleSheet.create((theme) => ({
 							offsetX: 0,
 							offsetY: 20,
 							blurRadius: 20,
-							color: theme.utilities.convertHexToRGBA(
-								'#C2C3CB',
-								0.5
-							),
+							color: hexToRgba('#C2C3CB', 0.5),
 						},
 					},
 				],
@@ -57,6 +54,6 @@ const styles = StyleSheet.create((theme) => ({
 		flex: 1,
 		backgroundColor: '#fafafa',
 	},
-}));
+});
 
 export default Landing;

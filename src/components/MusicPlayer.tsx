@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import useInsetsInfo from '@hooks/use-insets-info';
 import {
 	wp,
 	hp,
 	scaleHeight,
 } from '@raahimkhan23/react-native-responsive-utils';
+import hexToRgba from 'hex-to-rgba';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearProgress } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -171,7 +171,7 @@ const MusicPlayer: React.FC = React.memo(() => {
 	);
 });
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -179,12 +179,12 @@ const styles = StyleSheet.create((theme) => ({
 		zIndex: 1000,
 	},
 	progressBarContainer: {
-		width: theme.utilities.wp(100),
+		width: wp(100),
 	},
 	progressBar: {
-		width: theme.utilities.wp(100),
+		width: wp(100),
 		height: progressBarHeight,
-		marginBottom: theme.utilities.hp(1.3),
+		marginBottom: hp(1.3),
 	},
 	timeContainer: {
 		flexDirection: 'row',
@@ -193,31 +193,31 @@ const styles = StyleSheet.create((theme) => ({
 	},
 	timerText: {
 		fontFamily: 'OutfitMedium',
-		fontSize: theme.utilities.wp(4),
-		color: theme.utilities.convertHexToRGBA('#000000', 0.5),
+		fontSize: wp(4),
+		color: hexToRgba('#000000', 0.5),
 	},
 	controlsContainer: {
-		width: theme.utilities.wp(100),
+		width: wp(100),
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginBottom: theme.utilities.hp(1),
+		marginBottom: hp(1),
 	},
 	playPauseContainer: {
-		padding: theme.utilities.wp(2),
+		padding: wp(2),
 		borderRadius: 10,
-		backgroundColor: theme.utilities.convertHexToRGBA('#8794FF', 0.2),
+		backgroundColor: hexToRgba('#8794FF', 0.2),
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginHorizontal: theme.utilities.wp(10),
+		marginHorizontal: wp(10),
 	},
 	layerBlur: {
-		width: theme.utilities.wp(100),
+		width: wp(100),
 		height: layerBlurHeight,
 		backgroundColor: 'transparent',
 		zIndex: 1000,
 		position: 'absolute',
 	},
-}));
+});
 
 export default MusicPlayer;
