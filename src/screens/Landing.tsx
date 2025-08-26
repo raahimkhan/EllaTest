@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Platform, StyleSheet } from 'react-native';
 import MusicPlayer from '@components/MusicPlayer';
 import hexToRgba from 'hex-to-rgba';
+import TranscriptMetaData from '@components/TranscriptMetaData';
 
 const Landing: React.FC = React.memo(() => {
 	return (
@@ -9,7 +10,7 @@ const Landing: React.FC = React.memo(() => {
 			{/* simple space as can be seen in the Figma template */}
 			<View style={styles.header} />
 			{/* transcript meta data */}
-			<View style={styles.transcriptMetaData} />
+			<TranscriptMetaData />
 			{/* music player controls and the progress bar along with timer texts */}
 			<MusicPlayer />
 		</View>
@@ -53,10 +54,6 @@ const styles = StyleSheet.create({
 				boxShadow: `0px 20px 20px ${hexToRgba('#C2C3CB', 0.5)}`,
 			},
 		}),
-	},
-	transcriptMetaData: {
-		flex: 1,
-		backgroundColor: '#fafafa',
 	},
 });
 
