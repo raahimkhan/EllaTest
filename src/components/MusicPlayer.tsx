@@ -75,7 +75,7 @@ const MusicPlayer: React.FC = React.memo(() => {
 					{/* progress bar */}
 					<LinearProgress
 						style={styles.progressBar}
-						value={0}
+						value={Math.round(0.05 * 1000) / 1000}
 						variant="determinate"
 						color="#DBA604"
 						trackColor="rgba(135, 148, 255, 0.2)"
@@ -129,13 +129,13 @@ const MusicPlayer: React.FC = React.memo(() => {
 						{isPlaying ? (
 							<AntDesign
 								name="pause"
-								size={Platform.OS === 'web' ? wp(4) : wp(10)}
+								size={Platform.OS === 'web' ? wp(3.5) : wp(10)}
 								color="#DBA604"
 							/>
 						) : (
 							<AntDesign
 								name="caretright"
-								size={Platform.OS === 'web' ? wp(4) : wp(10)}
+								size={Platform.OS === 'web' ? wp(3.5) : wp(10)}
 								color="#DBA604"
 							/>
 						)}
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
 		marginBottom: Platform.OS === 'web' ? hp(0.5) : wp(1),
 	},
 	playPauseContainer: {
-		padding: Platform.OS === 'web' ? hp(0.1) : wp(2),
+		padding: Platform.OS === 'web' ? hp(0.4) : wp(2),
 		borderRadius: 10,
 		backgroundColor: hexToRgba('#8794FF', 0.2),
 		alignItems: 'center',
