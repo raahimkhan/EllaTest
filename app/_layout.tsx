@@ -11,6 +11,11 @@ import {
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
+	/*
+		- setting base screen size as per Figma
+		- this is required for responsive utils (my own library)
+		- also setting font scale min/max limits (my own library)
+	*/
 	useEffect(() => {
 		setBaseScreenSize(393, 852);
 		setFontScaleLimits(2, 2);
@@ -18,6 +23,7 @@ const RootLayout = () => {
 
 	const fontsLoaded = useLoadFonts();
 
+	// hide splash only when fonts have been loaded successfully
 	const onLayoutRootView = useCallback(async () => {
 		if (fontsLoaded) {
 			await SplashScreen.hideAsync();
