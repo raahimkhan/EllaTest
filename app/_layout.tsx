@@ -22,9 +22,8 @@ const RootLayout = () => {
 		setFontScaleLimits(2, 2);
 	}, []);
 
-	const transcriptMetaData = useGlobalStore.getState().transcriptMetaData;
-	const interleavedPhrases = useGlobalStore.getState().interleavedPhrases;
-	const audioSource = useGlobalStore.getState().audioSource;
+	const { transcriptMetaData, interleavedPhrases, audioSource } =
+		useGlobalStore();
 
 	const fontsLoaded = useLoadFonts();
 
