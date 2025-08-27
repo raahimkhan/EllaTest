@@ -1,3 +1,4 @@
+// this function takes time in seconds and return in mm:ss format
 export const formatTime = (seconds: number) => {
 	if (!seconds) return '00:00';
 	const mins = Math.floor(seconds / 60);
