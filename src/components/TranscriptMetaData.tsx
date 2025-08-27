@@ -7,18 +7,16 @@ import {
 	scaleFont,
 } from '@raahimkhan23/react-native-responsive-utils';
 import type { PhraseItem } from '@blue-prints/audio-meta-data';
-import { exampleAudioMetadata } from '@constants/example-audio-metadata';
-import { getInterleavedPhrases } from '@utils/get-interleaved-phrases';
 import { useGlobalStore } from '@global-store/global-store';
 
 const TranscriptMetaData: React.FC = React.memo(() => {
-	// current time where the audio is at (in milliseconds)
+	// get current time (ms), transcript meta data, and interleaved phrases from global state
 	const currentAudioTime = useGlobalStore((state) => state.currentAudioTime);
-
-	// generate interleaved phrases
-	const interleavedPhrases = getInterleavedPhrases(
-		exampleAudioMetadata.speakers,
-		exampleAudioMetadata.pause
+	const transcriptMetaData = useGlobalStore(
+		(state) => state.transcriptMetaData
+	);
+	const interleavedPhrases = useGlobalStore(
+		(state) => state.interleavedPhrases
 	);
 
 	// render each phrase item with speaker name
@@ -30,7 +28,7 @@ const TranscriptMetaData: React.FC = React.memo(() => {
 				- then we dynamically align the bubbles right or left based on speaker
 			*/
 			const isSecondSpeaker =
-				exampleAudioMetadata.speakers.findIndex(
+				transcriptMetaData!.speakers.findIndex(
 					(s) => s.name === item.speaker
 				) === 1;
 			// check if current phrase should be highlighted

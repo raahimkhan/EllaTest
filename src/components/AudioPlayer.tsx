@@ -24,8 +24,6 @@ import {
 	setAudioModeAsync,
 } from 'expo-audio';
 import { formatTime } from '@utils/format-time';
-import { exampleAudioMetadata } from '@constants/example-audio-metadata';
-import { getInterleavedPhrases } from '@utils/get-interleaved-phrases';
 import { rewindPlayer } from '@utils/rewind-player';
 import { forwardPlayer } from '@utils/forward-player';
 
@@ -42,8 +40,13 @@ const AudioPlayer: React.FC = React.memo(() => {
 	// safe area bottom insets
 	const { bottomInsets } = useInsetsInfo();
 
-	// related to audio player
+	// interleaved phrases from global state to handle forward and rewind
 	const updateGlobalState = useGlobalStore.getState().updateGlobalState;
+	const interleavedPhrases = useGlobalStore(
+		(state) => state.interleavedPhrases
+	);
+
+	// related to audio player
 	const isPlaying = useGlobalStore((state) => state.isPlaying);
 	const player = useAudioPlayer(audioSource);
 	const status = useAudioPlayerStatus(player);
@@ -52,15 +55,11 @@ const AudioPlayer: React.FC = React.memo(() => {
 	const progressWrapperRef = useRef<View>(null);
 	const [progressYPosition, setProgressYPosition] = useState<number>(0);
 
-	// generate interleaved phrases
-	const interleavedPhrases = getInterleavedPhrases(
-		exampleAudioMetadata.speakers,
-		exampleAudioMetadata.pause
-	);
-
 	/*
 		- here we check the status of the audio playback
 		- based on that we handle logic like seeking the audio back to the start and resetting
+		- we also constantly update current time in global state so that
+		the TranscriptMetaData component can highlight phrases by utilising it
 	*/
 	useEffect(() => {
 		if (status?.playing) {
@@ -74,24 +73,25 @@ const AudioPlayer: React.FC = React.memo(() => {
 	}, [status]);
 
 	/*
-		- here we measure the absolute y position of progress bar after layout completes
+		- here we measure the absolute y position of progress bar
 		- we then store it in state to absolutely position the blur layer correctly
-		- requestAnimationFrame ensures the measurement happens after the layout is finalized
 		- we also set audio modes for the audio player
+		- i added a slight delay of 100ms so that layout is calculated accurately
 	*/
 	useEffect(() => {
-		requestAnimationFrame(() => {
+		const timer = setTimeout(() => {
 			progressWrapperRef.current?.measure(
 				(_x, _y, _width, _height, _pageX, pageY) => {
 					setProgressYPosition(pageY);
 				}
 			);
-		});
+		}, 100);
 		setAudioModeAsync({
 			playsInSilentMode: true,
 			shouldPlayInBackground: false,
 			shouldRouteThroughEarpiece: true,
 		});
+		return () => clearTimeout(timer);
 	}, []);
 
 	return (
@@ -158,7 +158,7 @@ const AudioPlayer: React.FC = React.memo(() => {
 					<TouchableOpacity
 						hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
 						onPress={() =>
-							rewindPlayer(player, interleavedPhrases, status)
+							rewindPlayer(player, interleavedPhrases!, status)
 						}
 					>
 						<AntDesign
@@ -192,7 +192,7 @@ const AudioPlayer: React.FC = React.memo(() => {
 					<TouchableOpacity
 						hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
 						onPress={() =>
-							forwardPlayer(player, interleavedPhrases, status)
+							forwardPlayer(player, interleavedPhrases!, status)
 						}
 					>
 						<AntDesign
