@@ -5,6 +5,8 @@ import type { GlobalStateActions } from '@blue-prints/global-state-actions';
 const initialState: GlobalState = {
 	isPlaying: false,
 	currentAudioTime: -1,
+	transcriptMetaData: null,
+	interleavedPhrases: null,
 };
 
 export const useGlobalStore = create<GlobalState & GlobalStateActions>(
@@ -22,6 +24,8 @@ export const useGlobalStore = create<GlobalState & GlobalStateActions>(
 				return {
 					isPlaying: false,
 					currentAudioTime: 0,
+					transcriptMetaData: null,
+					interleavedPhrases: null,
 				} as GlobalState;
 			}),
 	})
