@@ -7,6 +7,7 @@ const initialState: GlobalState = {
 	currentAudioTime: -1,
 	transcriptMetaData: null,
 	interleavedPhrases: null,
+	audioSource: '',
 };
 
 export const useGlobalStore = create<GlobalState & GlobalStateActions>(
@@ -26,6 +27,7 @@ export const useGlobalStore = create<GlobalState & GlobalStateActions>(
 					currentAudioTime: 0,
 					transcriptMetaData: null,
 					interleavedPhrases: null,
+					audioSource: '',
 				} as GlobalState;
 			}),
 	})
