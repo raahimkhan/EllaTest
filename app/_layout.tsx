@@ -43,6 +43,10 @@ const RootLayout = () => {
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen
+						name="transcript-and-audio-loader"
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
 						name="transcript-player"
 						options={{ headerShown: false }}
 					/>

@@ -1,8 +1,8 @@
 import React from 'react';
 import TranscriptAndAudioLoader from '@screens/TranscriptAndAudioLoader';
 
-const Index = () => {
+const TranscriptAndAudioLoaderScreen = () => {
 	return <TranscriptAndAudioLoader />;
 };
 
-export default Index;
+export default TranscriptAndAudioLoaderScreen;
