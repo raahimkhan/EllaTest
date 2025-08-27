@@ -53,6 +53,9 @@ const MusicPlayer: React.FC = React.memo(() => {
 		- based on that we handle logic like seeking the audio back to the start and resetting
 	*/
 	useEffect(() => {
+		if (status?.playing) {
+			updateGlobalState({ currentAudioTime: status.currentTime * 1000 });
+		}
 		if (status?.didJustFinish) {
 			player.pause(); // without this, it was looping on Android for some reason
 			player.seekTo(0);
