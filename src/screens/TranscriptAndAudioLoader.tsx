@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, Platform, Alert, StyleSheet } from 'react-native';
+import { View, TextInput, Platform, StyleSheet } from 'react-native';
 import { wp, hp } from '@raahimkhan23/react-native-responsive-utils';
 import { Button } from '@rneui/themed';
 import { fetchTranscriptMetaData } from '@utils/fetch-transcript-metadata';
 import { getInterleavedPhrases } from '@utils/get-interleaved-phrases';
 import { useGlobalStore } from '@global-store/global-store';
 import { useRouter } from 'expo-router';
+import { customErrorAlert } from '@utils/custom-alert';
 
 const TranscriptAndAudioLoader: React.FC = React.memo(() => {
 	const router = useRouter();
@@ -27,8 +28,7 @@ const TranscriptAndAudioLoader: React.FC = React.memo(() => {
 				!urlRegex.test(transcriptURL) ||
 				!urlRegex.test(audioURL)
 			) {
-				Alert.alert(
-					'Error',
+				customErrorAlert(
 					'Either Transcript URL or Audio URL is missing or invalid!'
 				);
 				return;
@@ -58,10 +58,9 @@ const TranscriptAndAudioLoader: React.FC = React.memo(() => {
 			setDisabled(false);
 			const e = error as { statusCode?: number; message: string };
 			if (e.statusCode === 400) {
-				Alert.alert('Error', e.message);
+				customErrorAlert(e.message);
 			} else {
-				Alert.alert(
-					'Error',
+				customErrorAlert(
 					'Something went wrong while fetching transcript meta data!'
 				);
 			}

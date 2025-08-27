@@ -1,6 +1,6 @@
 import { useGlobalStore } from '@global-store/global-store';
 import { AudioPlayer } from 'expo-audio';
-import { Alert } from 'react-native';
+import { customErrorAlert } from '@utils/custom-alert';
 
 // this function will be used to toggle audio player pause/resume and handle related logic
 export const togglePlayPause = (player: AudioPlayer) => {
@@ -16,12 +16,11 @@ export const togglePlayPause = (player: AudioPlayer) => {
 			}
 			updateGlobalState({ isPlaying: !isPlaying });
 		} else {
-			Alert.alert(
-				'Error',
+			customErrorAlert(
 				'Player is not loaded! Audio is downloading. Please wait.'
 			);
 		}
 	} catch {
-		Alert.alert('Error', 'Something went wrong! Cannot play audio.');
+		customErrorAlert('Something went wrong! Cannot play audio.');
 	}
 };
