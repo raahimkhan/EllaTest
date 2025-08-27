@@ -95,4 +95,3 @@ web-build/
 *.mobileprovision
 .metro-health-check*
 .env
-.vercel

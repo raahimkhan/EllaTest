@@ -4,12 +4,16 @@
   "version": "1.0.0",
   "author": "Muhammad Raahim Khan <muhammadr915@gmail.com> (https://github.com/raahimkhan)",
   "scripts": {
+    "prepare": "lefthook install",
     "start": "expo start",
     "ios:bare": "expo run:ios",
     "android:bare": "expo run:android",
     "ios:managed": "expo start --ios",
     "android:managed": "expo start --android",
     "web": "expo start --web",
+    "export:web": "expo export --platform web",
+    "deploy:web": "eas deploy",
+    "deploy:web-prod": "eas deploy --prod",
     "checkDependencies": "expo install --check",
     "doctor": "expo-doctor",
     "prebuild": "expo prebuild --clean",
@@ -17,9 +21,7 @@
     "EASProductionBuild": "eas build --profile production --platform all",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "lint:fix": "eslint \"**/*.{js,ts,tsx}\" --fix",
-    "android": "expo run:android",
-    "ios": "expo run:ios"
+    "lint:fix": "eslint \"**/*.{js,ts,tsx}\" --fix"
   },
   "dependencies": {
     "@expo/config-plugins": "^10.1.2",
