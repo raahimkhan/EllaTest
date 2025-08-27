@@ -1,13 +1,16 @@
-// i.e., { speaker: 'John', words: 'this is one phrase.' }
+// i.e., { speaker: 'John', words: 'this is one phrase.', time: 1474, startTime: 0, endTime: 1474 }
 export interface PhraseItem {
 	speaker: string;
 	words: string;
+	time: number; // milli seconds
+	startTime: number; // milli seconds
+	endTime: number; // milli seconds
 }
 
 // i.e., { words: 'this is one phrase.', time: 1474 }
 export interface Phrase {
 	words: string;
-	time: number;
+	time: number; // milli seconds
 }
 
 /*
@@ -37,6 +40,6 @@ export interface Speaker {
 
 // please refer @constants/example-audio-metadata
 export interface AudioMetaData {
-	pause: number;
+	pause: number; // milli seconds
 	speakers: Speaker[];
 }
