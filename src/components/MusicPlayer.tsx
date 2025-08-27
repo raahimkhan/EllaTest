@@ -18,6 +18,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Progress from 'react-native-progress';
 import { useGlobalStore } from '@global-store/global-store';
 import { togglePlayPause } from '@utils/toggle-play-pause';
+import {
+	useAudioPlayer,
+	useAudioPlayerStatus,
+	setAudioModeAsync,
+} from 'expo-audio';
+import { formatTime } from '@utils/format-time';
+
+import audioSource from '@assets/audios/example-audio.mp3';
 
 /*
 	- extracting blur layer and progress bar heights as constants
@@ -30,17 +38,33 @@ const MusicPlayer: React.FC = React.memo(() => {
 	// safe area bottom insets
 	const { bottomInsets } = useInsetsInfo();
 
-	// music player is playing or not
+	// related to audio player
+	const updateGlobalState = useGlobalStore.getState().updateGlobalState;
 	const isPlaying = useGlobalStore((state) => state.isPlaying);
+	const player = useAudioPlayer(audioSource);
+	const status = useAudioPlayerStatus(player);
 
 	// related to the progress bar
 	const progressWrapperRef = useRef<View>(null);
 	const [progressYPosition, setProgressYPosition] = useState<number>(0);
 
 	/*
+		- here we check the status of the audio playback
+		- based on that we handle logic like seeking the audio back to the start and resetting
+	*/
+	useEffect(() => {
+		if (status?.didJustFinish) {
+			player.pause(); // without this, it was looping on Android for some reason
+			player.seekTo(0);
+			updateGlobalState({ isPlaying: false });
+		}
+	}, [status]);
+
+	/*
 		- here we measure the absolute y position of progress bar after layout completes
 		- we then store it in state to absolutely position the blur layer correctly
 		- requestAnimationFrame ensures the measurement happens after the layout is finalized
+		- we also set audio modes for the audio player
 	*/
 	useEffect(() => {
 		requestAnimationFrame(() => {
@@ -49,6 +73,11 @@ const MusicPlayer: React.FC = React.memo(() => {
 					setProgressYPosition(pageY);
 				}
 			);
+		});
+		setAudioModeAsync({
+			playsInSilentMode: true,
+			shouldPlayInBackground: false,
+			shouldRouteThroughEarpiece: true,
 		});
 	}, []);
 
@@ -67,7 +96,12 @@ const MusicPlayer: React.FC = React.memo(() => {
 					<View ref={progressWrapperRef}>
 						<Progress.Bar
 							style={styles.progressBar}
-							progress={0.8}
+							progress={
+								status?.duration
+									? (status?.currentTime || 0) /
+										status.duration
+									: 0
+							}
 							width={wp(100)}
 							height={progressBarHeight}
 							color="#DBA604"
@@ -90,7 +124,7 @@ const MusicPlayer: React.FC = React.memo(() => {
 								},
 							]}
 						>
-							01:23
+							{formatTime(status?.currentTime)}
 						</Text>
 						{/* audio total time text, i.e., total audio duration */}
 						<Text
@@ -102,7 +136,7 @@ const MusicPlayer: React.FC = React.memo(() => {
 								},
 							]}
 						>
-							06:00
+							{formatTime(status?.duration)}
 						</Text>
 					</View>
 				</View>
@@ -121,7 +155,7 @@ const MusicPlayer: React.FC = React.memo(() => {
 					<TouchableOpacity
 						style={styles.playPauseContainer}
 						hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
-						onPress={togglePlayPause}
+						onPress={() => togglePlayPause(player)}
 					>
 						{/* update play/pause based on the global isPlaying state */}
 						{isPlaying ? (
