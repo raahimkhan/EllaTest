@@ -38,7 +38,7 @@ import audioSource from '@assets/audios/example-audio.mp3';
 const layerBlurHeight = scaleHeight(75.83);
 const progressBarHeight = scaleHeight(9.71);
 
-const MusicPlayer: React.FC = React.memo(() => {
+const AudioPlayer: React.FC = React.memo(() => {
 	// safe area bottom insets
 	const { bottomInsets } = useInsetsInfo();
 
@@ -279,4 +279,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default MusicPlayer;
+export default AudioPlayer;

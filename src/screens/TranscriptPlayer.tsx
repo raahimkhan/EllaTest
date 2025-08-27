@@ -1,18 +1,18 @@
 import React from 'react';
 import { View, Platform, StyleSheet } from 'react-native';
-import MusicPlayer from '@components/MusicPlayer';
+import AudioPlayer from '@components/AudioPlayer';
 import hexToRgba from 'hex-to-rgba';
 import TranscriptMetaData from '@components/TranscriptMetaData';
 
-const Landing: React.FC = React.memo(() => {
+const TranscriptPlayer: React.FC = React.memo(() => {
 	return (
 		<View style={styles.container}>
 			{/* simple space as can be seen in the Figma template */}
 			<View style={styles.header} />
 			{/* transcript meta data */}
 			<TranscriptMetaData />
-			{/* music player controls and the progress bar along with timer texts */}
-			<MusicPlayer />
+			{/* audio player controls and the progress bar along with timer texts */}
+			<AudioPlayer />
 		</View>
 	);
 });
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Landing;
+export default TranscriptPlayer;
