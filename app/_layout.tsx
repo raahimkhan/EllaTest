@@ -7,6 +7,7 @@ import {
 	setBaseScreenSize,
 	setFontScaleLimits,
 } from '@raahimkhan23/react-native-responsive-utils';
+import { useGlobalStore } from '@global-store/global-store';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,6 +21,10 @@ const RootLayout = () => {
 		setBaseScreenSize(393, 852);
 		setFontScaleLimits(2, 2);
 	}, []);
+
+	const transcriptMetaData = useGlobalStore.getState().transcriptMetaData;
+	const interleavedPhrases = useGlobalStore.getState().interleavedPhrases;
+	const audioSource = useGlobalStore.getState().audioSource;
 
 	const fontsLoaded = useLoadFonts();
 
@@ -46,10 +51,19 @@ const RootLayout = () => {
 						name="transcript-and-audio-loader"
 						options={{ headerShown: false }}
 					/>
-					<Stack.Screen
-						name="transcript-player"
-						options={{ headerShown: false }}
-					/>
+					{/* auth guard to take user back to index screen if below data is empty */}
+					<Stack.Protected
+						guard={
+							transcriptMetaData !== null &&
+							interleavedPhrases !== null &&
+							audioSource !== ''
+						}
+					>
+						<Stack.Screen
+							name="transcript-player"
+							options={{ headerShown: false }}
+						/>
+					</Stack.Protected>
 				</Stack>
 			</View>
 		</>
