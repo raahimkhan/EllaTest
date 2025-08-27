@@ -5,5 +5,5 @@ export interface GlobalState {
 	currentAudioTime: number; // current time in ms of the playing audio
 	transcriptMetaData: AudioMetaData | null; // transcript containing phrases and speaker names etc
 	interleavedPhrases: PhraseItem[] | null; // phrases interleaved from the above defined meta data
-	audioSource: string;
+	audioSource: string; // url of the audio
 }

@@ -16,7 +16,10 @@ export const togglePlayPause = (player: AudioPlayer) => {
 			}
 			updateGlobalState({ isPlaying: !isPlaying });
 		} else {
-			Alert.alert('Error', 'Player is not loaded!');
+			Alert.alert(
+				'Error',
+				'Player is not loaded! Audio is downloading. Please wait.'
+			);
 		}
 	} catch {
 		Alert.alert('Error', 'Something went wrong! Cannot play audio.');
