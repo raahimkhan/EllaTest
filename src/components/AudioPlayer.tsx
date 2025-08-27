@@ -5,6 +5,7 @@ import {
 	TouchableOpacity,
 	Platform,
 	StyleSheet,
+	ActivityIndicator,
 } from 'react-native';
 import useInsetsInfo from '@hooks/use-insets-info';
 import {
@@ -27,8 +28,6 @@ import { formatTime } from '@utils/format-time';
 import { rewindPlayer } from '@utils/rewind-player';
 import { forwardPlayer } from '@utils/forward-player';
 
-import audioSource from '@assets/audios/example-audio.mp3';
-
 /*
 	- extracting blur layer and progress bar heights as constants
 	- will be used to absolutely position the blur layer above the progress bar
@@ -45,6 +44,7 @@ const AudioPlayer: React.FC = React.memo(() => {
 	const interleavedPhrases = useGlobalStore(
 		(state) => state.interleavedPhrases
 	);
+	const audioSource = useGlobalStore((state) => state.audioSource);
 
 	// related to audio player
 	const isPlaying = useGlobalStore((state) => state.isPlaying);
@@ -226,6 +226,15 @@ const AudioPlayer: React.FC = React.memo(() => {
 					style={StyleSheet.absoluteFill}
 				/>
 			</View>
+			{/* loading screen to show while audio is downloading */}
+			{!player.isLoaded && (
+				<View style={styles.loadingScreen}>
+					<Text style={styles.loadingText}>
+						Please wait! Audio is downloading.
+					</Text>
+					<ActivityIndicator size="large" color="white" />
+				</View>
+			)}
 		</>
 	);
 });
@@ -276,6 +285,21 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent',
 		zIndex: 1000,
 		position: 'absolute',
+	},
+	loadingScreen: {
+		position: 'absolute',
+		width: wp(100),
+		height: hp(100),
+		backgroundColor: 'rgba(50, 50, 50, 1)',
+		zIndex: 1000,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	loadingText: {
+		fontFamily: 'OutfitMedium',
+		fontSize: Platform.OS === 'web' ? wp(3) : wp(4),
+		color: 'white',
+		marginBottom: hp(4),
 	},
 });
 
