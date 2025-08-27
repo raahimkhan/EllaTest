@@ -24,6 +24,10 @@ import {
 	setAudioModeAsync,
 } from 'expo-audio';
 import { formatTime } from '@utils/format-time';
+import { exampleAudioMetadata } from '@constants/example-audio-metadata';
+import { getInterleavedPhrases } from '@utils/get-interleaved-phrases';
+import { rewindPlayer } from '@utils/rewind-player';
+import { forwardPlayer } from '@utils/forward-player';
 
 import audioSource from '@assets/audios/example-audio.mp3';
 
@@ -47,6 +51,12 @@ const MusicPlayer: React.FC = React.memo(() => {
 	// related to the progress bar
 	const progressWrapperRef = useRef<View>(null);
 	const [progressYPosition, setProgressYPosition] = useState<number>(0);
+
+	// generate interleaved phrases
+	const interleavedPhrases = getInterleavedPhrases(
+		exampleAudioMetadata.speakers,
+		exampleAudioMetadata.pause
+	);
 
 	/*
 		- here we check the status of the audio playback
@@ -147,6 +157,9 @@ const MusicPlayer: React.FC = React.memo(() => {
 					{/* rewind button */}
 					<TouchableOpacity
 						hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+						onPress={() =>
+							rewindPlayer(player, interleavedPhrases, status)
+						}
 					>
 						<AntDesign
 							name="banckward"
@@ -178,6 +191,9 @@ const MusicPlayer: React.FC = React.memo(() => {
 					{/* forward button */}
 					<TouchableOpacity
 						hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+						onPress={() =>
+							forwardPlayer(player, interleavedPhrases, status)
+						}
 					>
 						<AntDesign
 							name="forward"
