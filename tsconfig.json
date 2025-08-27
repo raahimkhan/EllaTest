@@ -22,7 +22,6 @@
       "@assets/*": ["./src/assets/*"],
       "@blue-prints/*": ["./src/blue-prints/*"],
       "@components/*": ["./src/components/*"],
-      "@constants/*": ["./src/constants/*"],
       "@global-store/*": ["./src/global-store/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@screens/*": ["./src/screens/*"],
