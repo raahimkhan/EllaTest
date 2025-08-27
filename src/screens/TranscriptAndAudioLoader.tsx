@@ -13,14 +13,24 @@ const TranscriptAndAudioLoader: React.FC = React.memo(() => {
 	const updateGlobalState = useGlobalStore.getState().updateGlobalState;
 
 	const [transcriptURL, setTranscriptURL] = useState<string>(''); // meta data url
+	const [audioURL, setAudioURL] = useState<string>(''); // audio source url
 	const [loading, setLoading] = useState<boolean>(false); // for button
 	const [disabled, setDisabled] = useState<boolean>(false); // for button
 
 	const handleSubmit = React.useCallback(async () => {
 		try {
-			// if no transcript URL provided, exit the function
-			if (!transcriptURL) {
-				Alert.alert('Error', 'Transcript URL is required!');
+			// verify that both URLs are present and are in valid format
+			const urlRegex = /^(https?:\/\/[^\s$.?#].[^\s]*)$/i;
+			if (
+				!transcriptURL ||
+				!audioURL ||
+				!urlRegex.test(transcriptURL) ||
+				!urlRegex.test(audioURL)
+			) {
+				Alert.alert(
+					'Error',
+					'Either Transcript URL or Audio URL is missing or invalid!'
+				);
 				return;
 			}
 			setLoading(true);
@@ -37,6 +47,7 @@ const TranscriptAndAudioLoader: React.FC = React.memo(() => {
 			updateGlobalState({
 				transcriptMetaData: transcriptMetaData,
 				interleavedPhrases: interleavedPhrases,
+				audioSource: audioURL,
 			});
 			setLoading(false);
 			setDisabled(false);
@@ -55,7 +66,7 @@ const TranscriptAndAudioLoader: React.FC = React.memo(() => {
 				);
 			}
 		}
-	}, [transcriptURL]);
+	}, [transcriptURL, audioURL]);
 
 	return (
 		<View style={styles.container}>
@@ -64,6 +75,16 @@ const TranscriptAndAudioLoader: React.FC = React.memo(() => {
 				value={transcriptURL}
 				onChangeText={setTranscriptURL}
 				placeholder="Enter transcript meta data URL..."
+				placeholderTextColor={'gray'}
+				style={styles.textInput}
+				autoCapitalize="none"
+				keyboardType="url"
+			/>
+			{/* input for mp3 audio url */}
+			<TextInput
+				value={audioURL}
+				onChangeText={setAudioURL}
+				placeholder="Enter audio URL..."
 				placeholderTextColor={'gray'}
 				style={styles.textInput}
 				autoCapitalize="none"
@@ -105,6 +126,7 @@ const styles = StyleSheet.create({
 		color: '#1B1B1B',
 		fontFamily: 'OutfitMedium',
 		fontSize: wp(3.5),
+		marginTop: hp(3),
 	},
 	titleStyle: {
 		fontFamily: 'OutfitSemiBold',
